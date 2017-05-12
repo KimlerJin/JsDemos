@@ -1,4 +1,4 @@
-function move(obj,attr,iTarget){
+function move(obj,attr,iTarget,fn){
 	clearInterval(obj.timer);
 	obj.timer = setInterval(function(){
 		var iCurAttr = attr == 'opacity' 
@@ -9,6 +9,9 @@ function move(obj,attr,iTarget){
 			iSpeed = iSpeed > 0 ? Math.ceil(iSpeed) : Math.floor(iSpeed);
 		if(iCurAttr == iTarget){
 			clearInterval(obj.timer);
+			if(typeof fn === 'function'){
+				fn();
+			}
 		}else{
 			if(attr == 'opacity'){
 				obj.style.filter = 'alpha(opacity:' + (iCurAttr + iSpeed) +')';
