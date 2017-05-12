@@ -48,25 +48,27 @@
 			move(this,'height',100);
 		}	
 		
-			aDiv[2].onmouseover = function(){
-				move(this,'opacity',100);
-			}
-			aDiv[2].onmouseout = function(){
-				move(this,'opacity',20);
-			}	
-			
-			aDiv[3].onmouseover = function(){
-				var that = this;
-				move(this,'width',500,function(){
-					move(that,'height',200);
-				});
-			}
-			aDiv[3].onmouseout = function(){
-				var that = this;
-				move(this,'height',100,function(){
-					move(that,'width',100);
-				});
-			}
+		aDiv[2].onmouseover = function(){
+			move(this,'opacity',100);
+		}
+		aDiv[2].onmouseout = function(){
+			move(this,'opacity',20);
+		}	
+		
+		aDiv[3].onmouseover = function(){
+			var that = this;
+			move(this,'width',500,function(){
+				move(that,'height',200);
+			});
+		}
+		aDiv[3].onmouseout = function(){
+			var that = this;
+			move(this,'height',100,function(){
+				move(that,'width',100);
+			});
+		}
+		
+		
 	}
   </script>
  </head>
