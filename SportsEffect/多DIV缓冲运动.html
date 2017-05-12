@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="Generator" content="EditPlus®">
+  <meta name="Author" content="">
+  <meta name="Keywords" content="">
+  <meta name="Description" content="">
+  <title>Document</title>
+  <style>
+	div{
+		width:100px;
+		height:100px;
+		background:red;
+		filter:alpha(opacity:20);
+		opacity:0.2;
+		margin-top:10px;
+		border:1px solid black;
+	}
+  </style>
+  <!--script language="javascript" type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script-->
+	<script language='javascript' type='text/javascript' src="move.js"></script>
+  <script type="text/javascript">
+  /*
+	code
+  */
+	
+	window.onload = function(){
+
+		var aDiv = document.getElementsByTagName('div');
+		var i = 0 ;
+		for(i = 0; i < aDiv.length-1; i++){
+			aDiv[i].onmouseover = function(){
+				move(this,'width',500);
+			}
+			aDiv[i].onmouseout = function(){
+				move(this,'width',100);
+			}	
+		}
+		
+			aDiv[4].onmouseover = function(){
+				move(this,'opacity',100);
+			}
+			aDiv[4].onmouseout = function(){
+				move(this,'opacity',20);
+			}	
+	}
+  </script>
+ </head>
+ <body>
+	<div id='div1'></div>
+	<div></div>
+	<div></div>
+	<div></div>
+	<div></div>
+ </body>
+</html>
