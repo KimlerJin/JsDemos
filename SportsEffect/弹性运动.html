@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="Generator" content="EditPlus®">
+  <meta name="Author" content="">
+  <meta name="Keywords" content="">
+  <meta name="Description" content="">
+  <title>Document</title>
+  <style>
+  #div1{width:100px;height:100px;background:red;position:absolute; top:50px;left:3;}
+  </style>
+  <script type="text/javascript" src="move.js"></script>
+  <script type="text/javascript">
+	//code
+	
+	window.onload=function(){
+		var oBtn = document.getElementById('btn1');
+		var oDiv = document.getElementById('div1');
+		oBtn.onclick=function(){
+			elasticMove(oDiv,300);
+		}
+	};
+	var timer = null;
+	var iSpeed = 0;
+	
+	function elasticMove(obj,iTarget){
+		//obj.iSpeed = 0;
+		clearInterval(obj.timer);
+		obj.timer=setInterval(function(){
+			//var obj = document.getElementById('div1');
+
+			iSpeed += (iTarget - obj.offsetLeft)/5;
+			iSpeed *= 0.7;
+			obj.style.left = obj.offsetLeft + iSpeed + 'px';
+			document.title=obj.offsetLeft;
+			/*if(iSpeed < 1 && Math.abs(iTarget - obj.offsetLeft) < 1){
+				obj.style.left = iTarget + 'px';
+				clearInterval(obj.timer);
+			}*/
+			
+		},30);
+		
+	};
+	
+  </script>
+ </head>
+ <body>
+  <input type='button' id='btn1' value='开始运动' />
+  <div id='div1'></div>
+  <div style='width:1px;height:300px;position:absolute;left:300px;top:0px;background:black;'></div>
+ </body>
+</html>
