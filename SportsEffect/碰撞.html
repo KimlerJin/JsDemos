@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="Generator" content="EditPlus®">
+  <meta name="Author" content="">
+  <meta name="Keywords" content="">
+  <meta name="Description" content="">
+  <title>Document</title>
+  <style>
+	.circle {
+		width: 100px;
+		height: 100px;
+		background: red;
+		
+		-moz-border-radius: 50px;
+		-webkit-border-radius: 50px;
+		border-radius: 50px;
+		
+	}
+	
+	#div1{
+		position:absolute;
+		left:0;
+		top:40px;
+	}
+  </style>
+  <!--script language="javascript" type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script-->
+  <script type="text/javascript">
+  /*
+	code
+  */
+  window.onload=function(){
+		var oBtn = document.getElementById('btn1');
+		oBtn.onclick=function(){
+			var oDiv = document.getElementById('div1');
+			startMove(oDiv);
+			oBtn.onclick = null;
+		}
+		
+		var oDiv = document.getElementById('div1');
+		oDiv.onmousedown=function(ev){
+			
+			var oEvent = ev || event;
+			
+			//计算 光标在触发元素内的XY坐标
+			var currX = oEvent.clientX - oDiv.offsetLeft;
+			var currY = oEvent.clientY - oDiv.offsetTop;
+			
+			document.onmousemove=function(eve){
+				oDiv = document.getElementById('div1');
+				var oEvent = eve || event;				
+				
+				//计算 触发元素左上角第一个像素点的XY坐标
+				var disX = oEvent.clientX - currX;
+				var disY = oEvent.clientY - currY;
+				
+				//取客户端可视区大小，如果光标移出可视区则移除move事件。
+				var clientWidth = document.documentElement.clientWidth;
+				var clientHeight = document.documentElement.clientHeight;
+				
+				if(disX >= clientWidth){
+					document.onmousemove = null;
+					disX =  clientWidth - oDiv.offsetWidth;
+				}
+				
+				if(disX <= 0 - oDiv.offsetWidth){
+					document.onmousemove = null;
+					disX = -oDiv.offsetWidth/2
+				}
+				
+				if(disY >= clientHeight){
+					document.onmousemove = null;
+					disY =  clientHeight - oDiv.offsetHeight;
+				}
+				
+				if(disY <= 0 - oDiv.offsetHeight){
+					document.onmousemove = null;
+					disY = -oDiv.offsetHeight/2
+				}
+				
+				
+				oDiv.style.left =disX+ 'px';
+				oDiv.style.top = disY + 'px';
+				
+			}
+		}
+		
+		oDiv.onmouseup=function(){
+			document.onmousemove = null;
+			
+		}
+		
+		
+	}
+	
+
+	function startMove(obj){
+		var iSpeedX = 20;
+		var iSpeedY = 8;
+		clearInterval(obj.timer);
+		
+		obj.timer = setInterval(function(){
+			
+			iSpeedY += 3;
+	
+			var left = document.documentElement.clientWidth - obj.offsetWidth;
+			var top = document.documentElement.clientHeight - obj.offsetHeight;
+			
+			var targetX = obj.offsetLeft + iSpeedX;
+			var targetY = obj.offsetTop + iSpeedY;
+			
+			if(targetX >= left ){
+				targetX = left;
+				iSpeedX *= -0.8;
+			}else if( targetX <= 0){
+				targetX = 0 ;
+				iSpeedX *= -0.8;
+			}
+			
+			if(targetY >= top ){
+				targetY = top;
+				iSpeedY *= -0.9;
+				iSpeedX *= 0.9;
+			} else if(targetY <= 0){
+				targetY = 0 ;
+				iSpeedY *= -0.9;
+				iSpeedX *= 0.9;
+			}
+			
+			obj.style.left = targetX + 'px';
+			obj.style.top = targetY + 'px';
+			
+		},30);
+	}
+  </script>
+ </head>
+ <body>
+	<div class='circle' id='div1'></div> 
+	<input type='button' id='btn1' value='开始'/>
+ </body>
+</html>
