@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="Generator" content="EditPlus®">
+  <meta name="Author" content="">
+  <meta name="Keywords" content="">
+  <meta name="Description" content="">
+  <title>Document</title>
+  <style>
+	.circle {
+		width: 100px;
+		height: 100px;
+		background: red;
+		line-height:100px;
+		text-align:center;
+		
+		-moz-border-radius: 50px;
+		-webkit-border-radius: 50px;
+		border-radius: 50px;
+		
+	}
+	
+	#div1{
+		position:absolute;
+		left:0;
+		top:40px;
+	}
+  </style>
+  <!--script language="javascript" type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script-->
+  <script type="text/javascript">
+  /*
+	code
+  */
+	
+	var timer = null;
+	var iSpeedX = 0;
+	var iSpeedY = 0;
+	
+	
+  window.onload=function(){
+		var oBtn = document.getElementById('btn1');
+		oBtn.onclick=function(){
+			var oDiv = document.getElementById('div1');
+			startMove(oDiv);
+			oBtn.onclick = null;
+		}
+		
+		var oDiv = document.getElementById('div1');
+		
+		//定义上一个鼠标点的XY坐标
+		lastX = 0;
+		lastY = 0;
+		
+		oDiv.onmousedown=function(ev){
+			
+			clearInterval(timer);
+			
+			var oEvent = ev || event;
+			
+			//计算 光标在触发元素内的XY坐标
+			var disX = oEvent.clientX - oDiv.offsetLeft;
+			var disY = oEvent.clientY - oDiv.offsetTop;
+			
+			document.onmousemove=function(eve){
+				oDiv = document.getElementById('div1');
+				var oEvent = eve || event;				
+				
+				//计算 触发元素左上角第一个像素点的XY坐标
+				var currLeft = oEvent.clientX - disX;
+				var currTop = oEvent.clientY - disY;
+								
+				iSpeedX = currLeft - lastX;
+				iSpeedY = currTop - lastY;
+				
+				oDiv.style.left =currLeft + 'px';
+				oDiv.style.top = currTop + 'px';
+				
+				lastX = currLeft;
+				lastY = currTop;
+				
+			}
+			
+			document.onmouseup=function(){
+				document.onmousemove = null;
+				document.onmouseup = null;
+				startMove(oDiv);
+			}
+		}		
+	}
+	
+
+	function startMove(obj){
+		//var iSpeedX = 20;
+		//var iSpeedY = 8;
+	
+		clearInterval(timer);
+		
+		timer = setInterval(function(){
+			
+			iSpeedY += 3;
+	
+			var left = document.documentElement.clientWidth - obj.offsetWidth;
+			var top = document.documentElement.clientHeight - obj.offsetHeight;
+			
+			var targetX = obj.offsetLeft + iSpeedX;
+			var targetY = obj.offsetTop + iSpeedY;
+			
+			if(targetX >= left ){
+				targetX = left;
+				iSpeedX *= -0.8;
+			}else if( targetX <= 0){
+				targetX = 0 ;
+				iSpeedX *= -0.8;
+			}
+			
+			if(targetY >= top ){
+				targetY = top;
+				iSpeedY *= -0.9;
+				iSpeedX *= 0.9;
+			} else if(targetY <= 0){
+				targetY = 0 ;
+				iSpeedY *= -0.9;
+				iSpeedX *= 0.9;
+			}
+			
+			if(Math.abs(iSpeedX) < 1){
+				iSpeedX = 0;
+			}
+			
+			if(Math.abs(iSpeedY) < 1){
+				iSpeedY = 0;
+			}
+			
+			if(iSpeedX == 0 && iSpeedY == 0 && top == targetY){
+				clearInterval(timer);
+			}else{
+				obj.style.left = targetX + 'px';
+				obj.style.top = targetY + 'px';
+			}
+		},30);
+	}
+  </script>
+ </head>
+ <body>
+	<div class='circle' id='div1'></div> 
+	<input type='button' id='btn1' value='弹球效果'/>
+ </body>
+</html>
